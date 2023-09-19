@@ -1,0 +1,42 @@
+cabal-version: 2.2
+
+-- This file has been generated from package.yaml by hpack version 0.35.2.
+--
+-- see: https://github.com/sol/hpack
+
+name:           dump-warnings-plugin
+version:        0.1.0.0
+synopsis:       Plugin that dumps GHC warnings to files
+description:    Please see the README on GitHub at <https://github.com/kfigiela/dump-warnings-plugin#readme>
+category:       Utility, Development
+homepage:       https://github.com/kfigiela/dump-warnings-plugin
+bug-reports:    https://github.com/kfigiela/dump-warnings-plugin/issues
+author:         Kamil Figiela
+maintainer:     kamil.figiela@gmail.com
+copyright:      2023 Kamil Figiela
+license:        BSD-3-Clause
+license-file:   LICENSE
+build-type:     Simple
+tested-with:
+    GHC ==8.10.4 || ==8.10.5 || ==8.10.6 || ==8.10.7 || ==9.0.1 || ==9.2.2 || ==9.4.2 || ==9.6.1
+extra-source-files:
+    "README.md CHANGELOG.md"
+
+library
+  exposed-modules:
+      DumpWarnings
+  other-modules:
+      Paths_dump_warnings_plugin
+  autogen-modules:
+      Paths_dump_warnings_plugin
+  hs-source-dirs:
+      src
+  ghc-options: -Wall -Wunused-packages -O2
+  build-depends:
+      aeson
+    , base
+    , directory
+    , ghc
+    , relude
+    , text
+  default-language: GHC2021

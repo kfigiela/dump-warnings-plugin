@@ -1,0 +1,34 @@
+name: dump-warnings-plugin
+version: 0.1.0.0
+synopsis: Plugin that dumps GHC warnings to files
+description: Please see the README on GitHub at <https://github.com/kfigiela/dump-warnings-plugin#readme>
+homepage: https://github.com/kfigiela/dump-warnings-plugin
+bug-reports: https://github.com/kfigiela/dump-warnings-plugin/issues
+license: BSD-3-Clause
+license-file: LICENSE
+
+author: Kamil Figiela
+maintainer: kamil.figiela@gmail.com
+copyright: 2023 Kamil Figiela
+category: Utility, Development
+extra-source-files: README.md
+  CHANGELOG.md
+tested-with: GHC ==8.10.4 || ==8.10.5 || ==8.10.6 || ==8.10.7 || ==9.0.1 || ==9.2.2 || ==9.4.2 || ==9.6.1
+
+dependencies:
+  - ghc
+  - base
+  - relude
+  - directory
+  - aeson
+  - text
+
+ghc-options:
+  - -Wall
+  - -Wunused-packages
+  - -O2
+
+library:
+  source-dirs:
+    - src
+  language: GHC2021
