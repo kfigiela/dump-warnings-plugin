@@ -28,3 +28,7 @@ find dist-newstyle/ -name "*.warn" -exec cat {} \; | jq -r '.absFile + ":" + (.l
 * [ ] Add some tests
 * [ ] Add executable to collect warnings instead of relying on shell scripts
 * [ ] Check if path handling is correct for non-typical scenarios
+
+## Related work
+
+* [pinned-warnings](https://hackage.haskell.org/package/pinned-warnings) which serves the similar purpose in GHCi sessions
