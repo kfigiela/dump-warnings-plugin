@@ -1,0 +1,3 @@
+{
+  "haskell.serverExecutablePath": "${workspaceFolder}/.devcontainer/haskell-language-server-nix"
+}

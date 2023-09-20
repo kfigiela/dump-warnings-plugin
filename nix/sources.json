@@ -1,0 +1,33 @@
+{
+    "nixpkgs": {
+        "branch": "master",
+        "description": "Nix Packages collection",
+        "homepage": "",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "b1adee2f9396e4101e70fe31d04010d3489d9be5",
+        "sha256": "1g9jblpgwy6a3pl9lsyp4r77khjgf9c58x1p4wxw44999hclp7ad",
+        "type": "tarball",
+        "url": "https://github.com/NixOS/nixpkgs/archive/b1adee2f9396e4101e70fe31d04010d3489d9be5.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "pre-commit": {
+        "branch": "master",
+        "description": "Seamless integration of https://pre-commit.com git hooks with Nix.",
+        "homepage": "https://pre-commit.com",
+        "owner": "cachix",
+        "repo": "pre-commit-hooks.nix",
+        "rev": "ab608394886fb04b8a5df3cb0bab2598400e3634",
+        "sha256": "0iv0827na6jzbii65m2fvd7brds08v8cxbh4s3y1vl142d5pyax2",
+        "type": "tarball",
+        "url": "https://github.com/cachix/pre-commit-hooks.nix/archive/ab608394886fb04b8a5df3cb0bab2598400e3634.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "python-commit-hooks": {
+        "branch": "main",
+        "repo": "https://github.com/pre-commit/pre-commit-hooks.git",
+        "rev": "3298ddab3c13dd77d6ce1fc0baf97691430d84b0",
+        "tag": "v4.3.0",
+        "type": "git"
+    }
+}

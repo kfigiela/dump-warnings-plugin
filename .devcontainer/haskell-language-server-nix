@@ -1,0 +1,4 @@
+#!/bin/bash
+if [ -e /home/$USER/.nix-profile/etc/profile.d/nix.sh ]; then . /home/$USER/.nix-profile/etc/profile.d/nix.sh; fi
+
+direnv exec $PWD haskell-language-server $@ +RTS --nonmoving-gc -N -A512M -n16m -M24G -K2G -RTS
