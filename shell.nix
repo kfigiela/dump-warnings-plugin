@@ -18,7 +18,7 @@ let
         entry = "${pre-commit.tools.hpack-dir}/bin/hpack-dir --silent";
         files = "(\\.l?hs$)|(\\.cabal$)|(package.yaml$)";
       };
-      fourmolu.enable = true;
+      # fourmolu.enable = true;
       nixfmt = {
         enable = true;
         excludes = [ "nix/sources\\.nix" ];

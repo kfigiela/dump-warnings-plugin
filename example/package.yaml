@@ -15,6 +15,7 @@ category: Utility, Development
 dependencies:
   - base
   - containers
+  - dump-warnings-plugin
 
 system-build-tools:
   - dump-warnings-plugin

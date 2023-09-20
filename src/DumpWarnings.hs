@@ -14,7 +14,7 @@ import Relude
 
 import Data.Aeson (ToJSON, (.=))
 import Data.Aeson qualified as A
-import System.Directory (doesFileExist, removeFile)
+import System.Directory (doesFileExist, removeFile, makeAbsolute)
 
 import GHC qualified
 import GHC.Data.FastString qualified as GHC
@@ -61,12 +61,14 @@ warningsHook passThroughDefaultLogAction logFlags messageClass srcSpan sdoc = do
         GHC.MCDiagnostic sev reason
 #endif
           | GHC.RealSrcSpan realSrcSpan _ <- srcSpan
-          , Just modFile <- GHC.srcSpanFileName_maybe srcSpan ->
-              do
+          , Just modFile <- GHC.srcSpanFileName_maybe srcSpan -> do
+                let file = GHC.unpackFS modFile
+                absFile <- makeAbsolute file
                 let warningLine =
                       WarningLine
                         { severity = Severity sev
-                        , file = toText $ GHC.unpackFS modFile
+                        , file = toText file
+                        , absFile = toText absFile
                         , location = Span realSrcSpan
                         , message = SDoc sdoc
                         , flag = case reason of
@@ -82,6 +84,7 @@ warningsHook passThroughDefaultLogAction logFlags messageClass srcSpan sdoc = do
 data WarningLine = WarningLine
   { severity :: Severity
   , file :: Text
+  , absFile :: Text
   , location :: Span
   , message :: SDoc
   , flag :: Maybe Text
