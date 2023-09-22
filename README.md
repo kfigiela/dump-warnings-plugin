@@ -17,6 +17,20 @@ At the moment, one can use a shell one-liner based on `find` and `jq` to pretty-
 find dist-newstyle/ -name "*.warn" -exec cat {} \; | jq -r '.absFile + ":" + (.location.startLine | tostring) + ":" + (.location.startCol | tostring) + " " + .severity + "/" + .flag + "\n" + .message + "\n"'
 ```
 
+## Usage
+
+1. Add plugin to your `package.yaml` or `name.cabal`, e.g.
+```yaml
+ghc-options:
+ - -fplugin=DumpWarnings
+dependencies:
+- dump-warnings-plugin
+```
+2. Build your project (e.g. `cabal build`) – possibly some warnings will be emitted, but modules will be built
+3. Do some changes to the code
+4. Build your project (e.g. `cabal build`) – already built modules may be cached, so you will no longer see some warnings
+5. Run one-liner script to collect all warnings
+
 ## Limitations
 
 * Some warnings are not collected (e.g. `-Wunused-packages`). GHC does not seem to call log hook for these
