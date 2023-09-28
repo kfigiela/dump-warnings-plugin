@@ -1,4 +1,4 @@
-name: dump-warnings-plugin
+name: dump-warnings-plugin-example2
 version: 0.1.0.0
 synopsis: Plugin that dumps GHC warnings to files
 description: Please see the README on GitHub at <https://github.com/kfigiela/dump-warnings-plugin#readme>
@@ -13,19 +13,18 @@ copyright: 2023 Kamil Figiela
 category: Utility, Development
 
 dependencies:
-  - ghc
   - base
-  - relude
-  - directory
-  - aeson
-  - text
   - containers
-  - filepath
+  - dump-warnings-plugin
+
+system-build-tools:
+  - dump-warnings-plugin
 
 ghc-options:
   - -Wall
   - -Wunused-packages
   - -O2
+  - -fplugin=DumpWarnings
 
 library:
   source-dirs:

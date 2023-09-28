@@ -4,7 +4,7 @@ cabal-version: 2.2
 --
 -- see: https://github.com/sol/hpack
 
-name:           dump-warnings-plugin
+name:           dump-warnings-plugin-example2
 version:        0.1.0.0
 synopsis:       Plugin that dumps GHC warnings to files
 description:    Please see the README on GitHub at <https://github.com/kfigiela/dump-warnings-plugin#readme>
@@ -20,21 +20,19 @@ build-type:     Simple
 
 library
   exposed-modules:
-      DumpWarnings
+      DumpWarningsExample
+      Foo.Bar.Baz
   other-modules:
-      Paths_dump_warnings_plugin
+      Paths_dump_warnings_plugin_example2
   autogen-modules:
-      Paths_dump_warnings_plugin
+      Paths_dump_warnings_plugin_example2
   hs-source-dirs:
       src
-  ghc-options: -Wall -Wunused-packages -O2
+  ghc-options: -Wall -Wunused-packages -O2 -fplugin=DumpWarnings
+  build-tools:
+      dump-warnings-plugin
   build-depends:
-      aeson
-    , base
+      base
     , containers
-    , directory
-    , filepath
-    , ghc
-    , relude
-    , text
+    , dump-warnings-plugin
   default-language: GHC2021

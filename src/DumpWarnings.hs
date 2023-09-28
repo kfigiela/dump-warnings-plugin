@@ -14,7 +14,9 @@ import Relude
 
 import Data.Aeson (ToJSON, (.=))
 import Data.Aeson qualified as A
-import System.Directory (doesFileExist, removeFile, makeAbsolute)
+import System.Directory (doesFileExist, removeFile, makeAbsolute, createDirectoryIfMissing)
+import Data.Map qualified as Map
+import System.FilePath (takeDirectory)
 
 import GHC qualified
 import GHC.Data.FastString qualified as GHC
@@ -26,6 +28,7 @@ import GHC.Types.Error qualified as GHC
 import GHC.Types.SrcLoc qualified as GHC
 import GHC.Utils.Logger qualified as GHC
 import GHC.Utils.Outputable qualified as GHC
+import GHC.IO (unsafePerformIO)
 
 plugin :: GHC.Plugin
 plugin =
@@ -41,11 +44,17 @@ addWarningCapture hscEnv =
     { GHC.hsc_logger = GHC.pushLogHook warningsHook (GHC.hsc_logger hscEnv)
     }
 
+modCache :: IORef (Map FilePath FilePath)
+modCache = unsafePerformIO $ newIORef mempty
+{-# NOINLINE modCache #-}
+
 removeOldWarnings :: GHC.ModSummary -> GHC.ParsedResult -> GHC.Hsc GHC.ParsedResult
 removeOldWarnings modSummary parsedModule = do
   let swapExtension = (<> "." <> warningFileExt) . stripSuffix' ".hi"
   let file = toString $ swapExtension $ toText $ GHC.ml_hi_file $ GHC.ms_location modSummary
   whenM (liftIO $ doesFileExist file) $ liftIO $ removeFile file
+  whenJust (GHC.ml_hs_file $ GHC.ms_location modSummary) $ \fp -> do
+    atomicModifyIORef_ modCache $ Map.insert fp file
   pure parsedModule
 
 warningsHook :: GHC.LogAction -> GHC.LogAction
@@ -75,11 +84,11 @@ warningsHook passThroughDefaultLogAction logFlags messageClass srcSpan sdoc = do
                             GHC.WarningWithFlag flag -> Just $ toText $ head $ GHC.warnFlagNames flag
                             _ -> Nothing
                         }
-                whenJust dumpFileMb $ \dumpFile -> do
+                whenJustM (Map.lookup file <$> readIORef modCache) $ \dumpFile -> do
+                  createDirectoryIfMissing True $ takeDirectory dumpFile
                   appendFileLBS dumpFile $ delimitLine $ A.encode warningLine
         _ -> pure ()
     delimitLine = (<> "\n")
-    dumpFileMb = (<> "/" <> GHC.log_dump_prefix logFlags <> warningFileExt) <$> GHC.log_dump_dir logFlags
 
 data WarningLine = WarningLine
   { severity :: Severity
