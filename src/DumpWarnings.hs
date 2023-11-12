@@ -65,7 +65,7 @@ warningsHook passThroughDefaultLogAction logFlags messageClass srcSpan sdoc = do
     dumpWarning =
       case messageClass of
 #if MIN_VERSION_ghc(9,6,0)
-        GHC.MCDiagnostic GHC.SevWarning reason _
+        GHC.MCDiagnostic sev reason _
 #else
         GHC.MCDiagnostic sev reason
 #endif
