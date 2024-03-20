@@ -1,7 +1,7 @@
 let sources = import ./nix/sources.nix;
 in { }:
 let
-  ghc = "ghc944";
+  ghc = "ghc982";
   pkgs = import sources.nixpkgs { };
   inherit (pkgs) lib;
   inherit (pkgs.haskell.lib) disableLibraryProfiling disableExecutableProfiling;

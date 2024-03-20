@@ -81,7 +81,11 @@ warningsHook passThroughDefaultLogAction logFlags messageClass srcSpan sdoc = do
                         , location = Span realSrcSpan
                         , message = SDoc sdoc
                         , flag = case reason of
+#if MIN_VERSION_ghc(9,8,0)
+                            GHC.ResolvedDiagnosticReason (GHC.WarningWithFlag flag) -> Just $ toText $ head $ GHC.warnFlagNames flag
+#else
                             GHC.WarningWithFlag flag -> Just $ toText $ head $ GHC.warnFlagNames flag
+#endif
                             _ -> Nothing
                         }
                 whenJustM (Map.lookup file <$> readIORef modCache) $ \dumpFile -> do
